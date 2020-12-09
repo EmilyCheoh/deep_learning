@@ -457,8 +457,8 @@ function NavDropdownExample() {
                         <Card.Text className="subheader-text" as="h4">
                             Final project for CS 496 Deep Learning, taught by Professor Bryan Pardo
                     </Card.Text>
-                        <Card.Text className="subheader-text" as="h4">
-                            Link to final paper
+                        <Card.Text className="subheader-text link" as="h4">
+                            <a href="https://github.com/EmilyCheoh/deep_learning/blob/main/final_paper.pdf">Link to final paper</a>
                     </Card.Text>
                     </div>
                 </Card.Body>

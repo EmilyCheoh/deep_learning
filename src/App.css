@@ -180,3 +180,8 @@ section {
   text-align: left;
   width: 80%;
 }
+
+.link{
+  text-decoration: none;
+  color: white;
+}
