@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/deep_learning/static/css/main.2078d671.chunk.css",
+    "main.js": "/deep_learning/static/js/main.dba9585d.chunk.js",
+    "main.js.map": "/deep_learning/static/js/main.dba9585d.chunk.js.map",
+    "runtime-main.js": "/deep_learning/static/js/runtime-main.7ffa3657.js",
+    "runtime-main.js.map": "/deep_learning/static/js/runtime-main.7ffa3657.js.map",
+    "static/css/2.3e9a6110.chunk.css": "/deep_learning/static/css/2.3e9a6110.chunk.css",
+    "static/js/2.979818d1.chunk.js": "/deep_learning/static/js/2.979818d1.chunk.js",
+    "static/js/2.979818d1.chunk.js.map": "/deep_learning/static/js/2.979818d1.chunk.js.map",
+    "index.html": "/deep_learning/index.html",
+    "precache-manifest.9dfa54a098f6b167cfd23567543a8843.js": "/deep_learning/precache-manifest.9dfa54a098f6b167cfd23567543a8843.js",
+    "service-worker.js": "/deep_learning/service-worker.js",
+    "static/css/2.3e9a6110.chunk.css.map": "/deep_learning/static/css/2.3e9a6110.chunk.css.map",
+    "static/css/main.2078d671.chunk.css.map": "/deep_learning/static/css/main.2078d671.chunk.css.map",
+    "static/js/2.979818d1.chunk.js.LICENSE.txt": "/deep_learning/static/js/2.979818d1.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7ffa3657.js",
+    "static/css/2.3e9a6110.chunk.css",
+    "static/js/2.979818d1.chunk.js",
+    "static/css/main.2078d671.chunk.css",
+    "static/js/main.dba9585d.chunk.js"
+  ]
+}
