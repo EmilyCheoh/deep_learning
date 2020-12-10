@@ -463,8 +463,8 @@ class TabContent extends React.Component {
 
                                     </table>
                                 </center>
-
-                                <p>Below are visualizations of lines charts to help comparing the results.</p>
+                                <br></br>
+                                <p>Below are interactive visualizations of our results. Click on the label to show and hide lines for easier comparison.</p>
                                 <center>
                                     <div className="vis">
                                         <Container fluid>
