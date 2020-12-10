@@ -4,36 +4,78 @@ import { Nav, Navbar, Container, Row, Col, Card } from "react-bootstrap";
 import TimeSeriesChart from "./components/TimeSeriesChart"
 import "./App.css";
 
+const opt = {
+    title: {
+        display: true,
+        text: "Word2vec-based model training results",
+        fontSize: 18,
+    }
+}
 
+const opt2 = {
+    title: {
+        display: true,
+        text: "BERT-based model training results",
+        fontSize: 18,
+    }
+}
 const line_graph = {
-    labels: [],
+    labels: ["ACC", "AUC", "PRE", "REC"],
     datasets: [
         {
-            label: "Number of Cases",
-            data: [],
+            label: "TextCNN",
+            data: [0.8616, 0.9332, 0.8726, 0.8503],
             fill: false,
+            lineTension: 0,
             borderColor: "#DC143C",
         },
         {
-            label: "Number of Tests Conducted",
-            data: [],
+            label: "CharCNN",
+            data: [0.8379, 0.9176, 0.8383, 0.8381],
             fill: false,
+            lineTension: 0,
             borderColor: "#006400",
+        },
+        {
+            label: "LSTM",
+            data: [0.8571, 0.9201, 0.8626, 0.8120],
+            fill: false,
+            lineTension: 0,
+            borderColor: "#CD7F32",
+        },
+        {
+            label: "Bi-LSTM",
+            data: [0.8451, 0.9064, 0.8975, 0.8029],
+            fill: false,
+            lineTension: 0,
+            borderColor: "#855E42",
+        },
+        {
+            label: "BiLSTM + Attention",
+            data: [0.8762, 0.9381, 0.9077, 0.8615],
+            fill: false,
+            lineTension: 0,
+            borderColor: "#FF7F00",
         },
     ],
 };
 
 const line_graph_cases = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    labels: ["ACC", "AUC", "PRE", "REC"],
     datasets: [
         {
-            label: "Number of Daily Confirmed Cases",
-            //backgroundColor: "rgba(75,192,192,0.2)",
-            //borderColor: "rgba(255,99,132,1)",
-            //borderWidth: 3,
-            data: [2, 1, 2, 1, 1, 1],
+            label: "Bi-LSTM",
+            data: [0.8841, 0.9293, 0.9257, 0.8592],
             fill: false,
-            borderColor: "#DC143C",
+            lineTension: 0,
+            borderColor: "#855E42",
+        },
+        {
+            label: "BiLSTM + Attention",
+            data: [0.9343, 0.9506, 0.9517, 0.9239],
+            fill: false,
+            lineTension: 0,
+            borderColor: "#FF7F00",
         },
     ],
 };
@@ -253,11 +295,11 @@ class TabContent extends React.Component {
 
     render() {
         const { error, isLoaded, cases, date, daily_confirmed, tested, daily_tested } = this.state;
-        line_graph.datasets[0].data = cases;
-        line_graph.datasets[1].data = tested;
-        line_graph.labels = date;
-        line_graph_cases.datasets[0].data = daily_confirmed;
-        line_graph_cases.labels = date;
+        // line_graph.datasets[0].data = cases;
+        // line_graph.datasets[1].data = tested;
+        // line_graph.labels = date;
+        // line_graph_cases.datasets[0].data = daily_confirmed;
+        // line_graph_cases.labels = date;
         bar_graph_cases.datasets[0].data = daily_confirmed;
         bar_graph_cases.labels = date;
         line_graph_testing.labels = date;
@@ -272,16 +314,21 @@ class TabContent extends React.Component {
                         <section className="panel panel-danger">
                             <h2 className="panel-heading">Project Overview</h2>
                             <p className="panel-body">
-                                Sentiment analysis has been a critical task of natural language processing (NLP). In this project, we focus on analyzing sentiments of short movies reviews using Bi-LSTM models. We construct four variations of Bi-LSTM models, namely Word2vec-based Bi-LSTM, Word2vec-based Bi-LSTM with Attention model, BERT-based Bi-LSTM, and BERT-based Bi-LSTM with Attention model, and compare the performance of our models with other popular NLP models. Through our experiments, we find that the BERT-based Bi-LSTM with Attention model achieves the best overall results.
+                                <p>The prevalence of the internet greatly propagates the amount of user-generated contents. As user-generated contents usually reflect the thinkings of the authors, they contain valuable information that can be helpful to multiple stakeholders. For example, a movie producer might want to know how audiences are reacting to her latest movie by reading through the comments and reviews online. It is reasonable to argue that such an approach is not efficient enough if there are thousands of reviews available, and it is natural to think of whether it is possible to use deep learning techniques to systematically analyze such information on a large scale.</p>
+                                <p>Hence, for this project, we propose to test the performance of various deep learning models on predicting sentiments of movie reviews, and we want to focus on short reviews in particular because they are usually hard to train due to the limited length. There has been a lot of research around classifying sentiments of text. In 2002, Peter Turney proposed a simple unsupervised learning algorithm that can classify opinion words as positive or negative with 74% accuracy. The term sentiment analysis first appeared in a 2003 paper by Tetsuya Nasukawa and Jeonghee Yi, where they defined sentiment analysis as to determine how emotions are expressed in the text and whether these expressions indicate  positive or negative opinions on the subject. In 2015, Tai et al. proposed to analyze semantic representations by a serialized LSTM model with added syntactic structure. Their work achieved good results in sentence-level sentiment classification, yet we think there are areas of improvement on their work because the LSTM model only preserves past information. On the other hand, the Bi-LSTM model can preserve both past and future information, and we think this can help to increase accuracy even more. We also want to further explore whether combining models (e.g. Bi-LSTM + Attention) can further improve accuracy of labeling sentiment of short movie review. Therefore, in this project, we construct variations of Bi-LSTM models and compare their performances with other popular NLP models.</p>
+                            
                             </p>
                         </section>
+
                         <Container fluid>
                             <div className="spacing" />
-                            <Line id="line_graph" data={line_graph} />
+                            <Line id="line_graph" data={line_graph} options={opt} />
+
                             <div className="graphspacing" />
-                            <Doughnut data={doughnut_chart_all} />
+                            <Line id="line_graph_cases" data={line_graph_cases} options={opt2} />
                             <div className="graphspacing" />
                         </Container>
+
                     </Container>
                 ) : null}
                 {this.props.activeTab.name === TabName[1] ? (
@@ -308,14 +355,15 @@ class TabContent extends React.Component {
                         <section className="panel panel-danger">
                             <h2 className="panel-heading">Methods</h2>
                             <p className="panel-body">
-                                <p>We train our models on the IMDB movie sentiment dataset provided by [4]. The dataset contains 50,000 binary labeled movie reviews for training and testing, with the reviews equally divided into training and testing sets. 50,000 unlabeled data are also included for unsupervised training.</p>
-                                <p>We analyze the dataset by examining the distribution of text length. As shown in figure 2.1, the majority of  reviews are within the length of 250 words. As we focus on short movie reviews for the project, we decide to use 200 as the maximum text length to filter out long reviews. We then perform data cleansing for feature construction by decapitalizing all the letters and removing punctuations and stopwords. We also remove words with low frequency because they may be typos and do not carry significant meaning.</p>
+                                <p>We train our models on the IMDB movie sentiment dataset provided by Maas et al.. The dataset contains 50,000 binary labeled movie reviews for training and testing, with the reviews equally divided into training and testing sets. 50,000 unlabeled data are also included for unsupervised training.</p>
+                                <p>We analyze the dataset by examining the distribution of text length. The majority of reviews are within the length of 250 words. As we focus on short movie reviews for the project, we decide to use 200 as the maximum text length to filter out long reviews. We then perform data cleansing for feature construction by decapitalizing all the letters and removing punctuations and stopwords. We also remove words with low frequency because they may be typos and do not carry significant meaning.</p>
                             </p>
                             <p className="panel-body">
                                 <p>After the preprocessing is done, we experiment with two different models to generate word embeddings that are later used as the input of our deep learning models. We first use the Word2vec model. We specify to use the Skip-gram method to train, which predicts the word based on relevant context. We choose Skip-gram over CBOW because it is good at representing rare words and has higher accuracy.</p>
                                 <p>We also use the BERT model to generate sentence embeddings as it is a relatively new model and is good at resolving polysemy, so we wonder if using word embeddings from the BERT model can improve accuracy. We use the BERT base model with 12 layers. Although it is possible to use the output of any layer as the word embeddings for later use, we find that the output of the 11th layer produces the best results. If we use the output from earlier layers, the model may not be sufficiently trained; if we directly use the output from the last layer, it would be too similar to the original text. </p>
                                 <p>We then construct a Bi-LSTM model with 128 neurons for training, with each neuron defining a forward LSTM structure and a reverse LSTM structure. We then concatenate their outputs, and pass it to the next layer of the Bi-LSTM model. </p>
                                 <p>To examine whether combining the Attention model with Bi-LSTM can improve accuracy, we pass the result of the last layer of the Bi-LSTM model to an Attention model. We then apply the tanh activation function to the output, multiply it with the weight vector, calculate the softmax, and pass the final result to the fully connected layer.</p>
+                                {/* <img src="flowchart.png" alt="method"></img> */}
                             </p>
                         </section>
 
@@ -386,7 +434,7 @@ class TabContent extends React.Component {
                                         <td>0.9517</td>
                                         <td>0.9239</td>
                                     </tr>
-                                  
+
                                 </table>
 
                             </p>
@@ -445,7 +493,7 @@ function NavDropdownExample() {
                 {/* <Card.Header>Featured</Card.Header> */}
                 <Card.Body>
                     <Card.Title className="mainheader-text" as="h1">
-                        Testing the Performances of Variations of the Bi-LSTM model on Sentiment Analysis
+                        Testing the Performances of Bi-LSTM + Attention model on Sentiment Analysis
                     </Card.Title>
                     <div className='info'>
                         <Card.Text className="subheader-text" as="h4">
@@ -459,7 +507,7 @@ function NavDropdownExample() {
                     </Card.Text>
                         <Card.Text className="subheader-text link" as="h4">
                             <a href="https://github.com/EmilyCheoh/deep_learning/blob/main/final_paper.pdf">Link to final paper</a>
-                    </Card.Text>
+                        </Card.Text>
                     </div>
                 </Card.Body>
             </Card>
