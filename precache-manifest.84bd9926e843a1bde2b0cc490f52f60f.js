@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5c44a0c96d11a6527853e3994f709713",
+    "revision": "000a772d3ed55b5be711368b5fe5635f",
     "url": "/deep_learning/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/deep_learning/static/css/2.3e9a6110.chunk.css"
   },
   {
-    "revision": "04ba589af8d22dce1eec",
+    "revision": "68b6c43462a99288b275",
     "url": "/deep_learning/static/css/main.146c1922.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/deep_learning/static/js/2.28fba0b7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "04ba589af8d22dce1eec",
-    "url": "/deep_learning/static/js/main.7be4e516.chunk.js"
+    "revision": "68b6c43462a99288b275",
+    "url": "/deep_learning/static/js/main.fcb0d189.chunk.js"
   },
   {
     "revision": "b1214560070f7ab20019",
