@@ -318,16 +318,22 @@ class TabContent extends React.Component {
                                 <p>Hence, for this project, we propose to test the performance of various deep learning models on predicting sentiments of movie reviews, and we want to focus on short reviews in particular because they are usually hard to train due to the limited length. There has been a lot of research around classifying sentiments of text. In 2002, Peter Turney proposed a simple unsupervised learning algorithm that can classify opinion words as positive or negative with 74% accuracy. The term sentiment analysis first appeared in a 2003 paper by Tetsuya Nasukawa and Jeonghee Yi, where they defined sentiment analysis as to determine how emotions are expressed in the text and whether these expressions indicate  positive or negative opinions on the subject. In 2015, Tai et al. proposed to analyze semantic representations by a serialized LSTM model with added syntactic structure. Their work achieved good results in sentence-level sentiment classification, yet we think there are areas of improvement on their work because the LSTM model only preserves past information. On the other hand, the Bi-LSTM model can preserve both past and future information, and we think this can help to increase accuracy even more. We also want to further explore whether combining models (e.g. Bi-LSTM + Attention) can further improve accuracy of labeling sentiment of short movie review. Therefore, in this project, we construct variations of Bi-LSTM models and compare their performances with other popular NLP models.</p>
 
                             </p>
+                            <center>
+                        <div className="vis">
+                            <Container fluid>
+                                <div className="spacing" />
+                                <Line id="line_graph" data={line_graph} options={opt} />
+
+                                <div className="graphspacing" />
+                                <Line id="line_graph_cases" data={line_graph_cases} options={opt2} />
+                                <div className="graphspacing" />
+                            </Container></div>
+                        </center>
                         </section>
 
-                        <Container fluid>
-                            <div className="spacing" />
-                            <Line id="line_graph" data={line_graph} options={opt} />
+                        
 
-                            <div className="graphspacing" />
-                            <Line id="line_graph_cases" data={line_graph_cases} options={opt2} />
-                            <div className="graphspacing" />
-                        </Container>
+
 
                     </Container>
                 ) : null}
@@ -358,14 +364,16 @@ class TabContent extends React.Component {
                                 <p>We train our models on the IMDB movie sentiment dataset provided by Maas et al.. The dataset contains 50,000 binary labeled movie reviews for training and testing, with the reviews equally divided into training and testing sets. 50,000 unlabeled data are also included for unsupervised training.</p>
                                 <p>We analyze the dataset by examining the distribution of text length. The majority of reviews are within the length of 250 words. As we focus on short movie reviews for the project, we decide to use 200 as the maximum text length to filter out long reviews. We then perform data cleansing for feature construction by decapitalizing all the letters and removing punctuations and stopwords. We also remove words with low frequency because they may be typos and do not carry significant meaning.</p>
                                 <p>Below is the distribution of our dataset.</p>
-                                <img className="body-image" src="https://raw.githubusercontent.com/EmilyCheoh/deep_learning/main/src/data.png" alt="method"></img>
+                                <center><img className="body-image" src="https://raw.githubusercontent.com/EmilyCheoh/deep_learning/main/src/data.png" alt="method"></img></center>
+
                             </p>
                             <p className="panel-body">
                                 <p>After the preprocessing is done, we experiment with two different models to generate word embeddings that are later used as the input of our deep learning models. We first use the Word2vec model. We specify to use the Skip-gram method to train, which predicts the word based on relevant context. We choose Skip-gram over CBOW because it is good at representing rare words and has higher accuracy.</p>
                                 <p>We also use the BERT model to generate sentence embeddings as it is a relatively new model and is good at resolving polysemy, so we wonder if using word embeddings from the BERT model can improve accuracy. We use the BERT base model with 12 layers. Although it is possible to use the output of any layer as the word embeddings for later use, we find that the output of the 11th layer produces the best results. If we use the output from earlier layers, the model may not be sufficiently trained; if we directly use the output from the last layer, it would be too similar to the original text. </p>
                                 <p>We then construct a Bi-LSTM model with 128 neurons for training, with each neuron defining a forward LSTM structure and a reverse LSTM structure. We then concatenate their outputs, and pass it to the next layer of the Bi-LSTM model. </p>
                                 <p>To examine whether combining the Attention model with Bi-LSTM can improve accuracy, we pass the result of the last layer of the Bi-LSTM model to an Attention model. We then apply the tanh activation function to the output, multiply it with the weight vector, calculate the softmax, and pass the final result to the fully connected layer.</p>
-                                <img className="body-image" src="https://raw.githubusercontent.com/EmilyCheoh/deep_learning/main/src/flowchart.png" alt="method"></img>
+                                <center><img className="body-image" src="https://raw.githubusercontent.com/EmilyCheoh/deep_learning/main/src/flowchart.png" alt="method"></img></center>
+
                             </p>
                         </section>
 
@@ -379,92 +387,97 @@ class TabContent extends React.Component {
                                 <p>Because we're performing binary classification, our predicting results belong to one of the following four outcomes: true positive, true negative), false positive, and false negative. Therefore, we measure performance by four metrics: Area under the ROC Curve (AUC), Accuracy (ACC), precision (PRE), and recall (REC). Ideally, we would like to maximize all of the above metrics. </p>
 
                                 <p>We compare both our Word2Vec-based model and BERT-based model against four other commonly used deep learning NLP models such as textCNN and CharCNN, as well as a single directional LSTM model. The results are shown in the following table:</p>
-                                <table className="results">
-                                    <tr>
-                                        <th>Word2vec-based Models</th>
-                                        <th>ACC</th>
-                                        <th>AUC</th>
-                                        <th>PRE</th>
-                                        <th>REC</th>
-                                    </tr>
-                                    <tr>
-                                        <td>TextCNN</td>
-                                        <td>0.8616</td>
-                                        <td>0.9332</td>
-                                        <td>0.8726</td>
-                                        <td>0.8503</td>
-                                    </tr>
-                                    <tr>
-                                        <td>CharCNN</td>
-                                        <td>0.8379</td>
-                                        <td>0.9176</td>
-                                        <td>0.8383</td>
-                                        <td>0.8381</td>
-                                    </tr>
-                                    <tr>
-                                        <td>LSTM</td>
-                                        <td>0.8571</td>
-                                        <td>0.9201</td>
-                                        <td>0.8626</td>
-                                        <td>0.8120</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bi-LSTM</td>
-                                        <td>0.8451</td>
-                                        <td>0.9064</td>
-                                        <td>0.8975</td>
-                                        <td>0.8029</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bi-LSTM+Attention</td>
-                                        <td>0.8762</td>
-                                        <td>0.9381</td>
-                                        <td>0.9077</td>
-                                        <td>0.8615</td>
-                                    </tr>
+                                <center>
+                                    <table className="results">
+                                        <tr>
+                                            <th>Word2vec-based Models</th>
+                                            <th>ACC</th>
+                                            <th>AUC</th>
+                                            <th>PRE</th>
+                                            <th>REC</th>
+                                        </tr>
+                                        <tr>
+                                            <td>TextCNN</td>
+                                            <td>0.8616</td>
+                                            <td>0.9332</td>
+                                            <td>0.8726</td>
+                                            <td>0.8503</td>
+                                        </tr>
+                                        <tr>
+                                            <td>CharCNN</td>
+                                            <td>0.8379</td>
+                                            <td>0.9176</td>
+                                            <td>0.8383</td>
+                                            <td>0.8381</td>
+                                        </tr>
+                                        <tr>
+                                            <td>LSTM</td>
+                                            <td>0.8571</td>
+                                            <td>0.9201</td>
+                                            <td>0.8626</td>
+                                            <td>0.8120</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bi-LSTM</td>
+                                            <td>0.8451</td>
+                                            <td>0.9064</td>
+                                            <td>0.8975</td>
+                                            <td>0.8029</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bi-LSTM+Attention</td>
+                                            <td>0.8762</td>
+                                            <td>0.9381</td>
+                                            <td>0.9077</td>
+                                            <td>0.8615</td>
+                                        </tr>
 
-                                </table>
+                                    </table>
+                                </center>
                                 <br></br>
+                                <center>
+                                    <table className="results">
+                                        <tr>
+                                            <th>BERT-based Models &nbsp; &nbsp; &nbsp; &nbsp;</th>
+                                            <th>ACC</th>
+                                            <th>AUC</th>
+                                            <th>PRE</th>
+                                            <th>REC</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Bi-LSTM</td>
+                                            <td>0.8841</td>
+                                            <td>0.9293</td>
+                                            <td>0.9257</td>
+                                            <td>0.8592</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Bi-LSTM+Attention</td>
+                                            <td>0.9343</td>
+                                            <td>0.9506</td>
+                                            <td>0.9517</td>
+                                            <td>0.9239</td>
+                                        </tr>
+                                        <br></br>
 
-                                <table className="results">
-                                    <tr>
-                                        <th>BERT-based Models &nbsp; &nbsp; &nbsp; &nbsp;</th>
-                                        <th>ACC</th>
-                                        <th>AUC</th>
-                                        <th>PRE</th>
-                                        <th>REC</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Bi-LSTM</td>
-                                        <td>0.8841</td>
-                                        <td>0.9293</td>
-                                        <td>0.9257</td>
-                                        <td>0.8592</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Bi-LSTM+Attention</td>
-                                        <td>0.9343</td>
-                                        <td>0.9506</td>
-                                        <td>0.9517</td>
-                                        <td>0.9239</td>
-                                    </tr>
-                                    <br></br>
 
-        
-                                </table>
+                                    </table>
+                                </center>
 
                                 <p>Below are visualizations of lines charts to help comparing the results.</p>
-                                <div className="vis">
-                                <Container fluid>
-                                    <div className="spacing" />
-                                    <Line id="line_graph" data={line_graph} options={opt} />
+                                <center>
+                                    <div className="vis">
+                                        <Container fluid>
+                                            <div className="spacing" />
+                                            <Line id="line_graph" data={line_graph} options={opt} />
 
-                                    <div className="graphspacing" />
-                                    <Line id="line_graph_cases" data={line_graph_cases} options={opt2} />
-                                    <div className="graphspacing" />
-                                </Container>
-                                </div>
-                                
+                                            <div className="graphspacing" />
+                                            <Line id="line_graph_cases" data={line_graph_cases} options={opt2} />
+                                            <div className="graphspacing" />
+                                        </Container>
+                                    </div>
+                                </center>
+
 
                             </p>
 
